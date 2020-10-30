@@ -11,6 +11,8 @@ window.Vue = require("vue");
 
 import { routes } from "./router";
 import VueRoute from "vue-router";
+import common from './common';
+Vue.mixin(common);
 
 const router = new VueRoute({
     mode: "history",

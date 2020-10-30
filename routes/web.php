@@ -20,11 +20,14 @@ Route::get('/admin', function () {
     return view('admin.homeAdmin');
     
 });
+Route::get('admin/app/getTag', 'App\Http\Controllers\AdminController@getTag');
+
+
+Route::post('admin/app/create_tag', 'App\Http\Controllers\AdminController@addtag');
+Route::post('admin/app/edit_tag', 'App\Http\Controllers\AdminController@editTag');
+
+
 Route::get('/admin/{any}', function () {
     return view('admin.homeAdmin');
     
 })->where('any', '.*');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

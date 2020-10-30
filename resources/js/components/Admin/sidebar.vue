@@ -56,10 +56,10 @@
           </li>
   
           <li class="nav-item has-treeview">
-            <router-link to="/admin/tags" class="nav-link">
+            <router-link to="/admin/tags" class="nav-link ml-2">
              <i class="fas fa-tag"></i>
-              <p>
-                 Tags
+              <p class="pl-2">
+                Tags
               </p>
             </router-link>
          
