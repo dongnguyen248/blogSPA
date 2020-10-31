@@ -65,7 +65,7 @@ export default {
                 text: desc
             })
         },
-        swr(title = 'Some thing went wrong! Please try again') {
+        swr(desc = 'Some thing went wrong! Please try again', title = "!Oop") {
             Swal.fire({
                 toast: true,
                 icon: "warning",
@@ -78,8 +78,10 @@ export default {
                     toast.addEventListener("mouseleave", Swal.resumeTimer);
                 },
                 title: title,
+                text: desc
 
             })
         },
+
     },
 }

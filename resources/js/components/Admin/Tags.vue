@@ -28,11 +28,11 @@
               <td>{{tag.tagName}}</td>
               <td>{{tag.created_at}}</td>
               <td>
-                <a @click.prevent="editTag(tag)">
+                <a @click.prevent="editTag(tag,i)">
                   <i class="fa fa-edit text-blue ml-4 mr-2"></i>
 
                 </a>
-                <a @click.prevent="deleteTag">
+                <a @click.prevent="deleteTag(tag,i)">
                   <i class="fa fa-trash text-red ml-2"></i>
 
                 </a>
@@ -96,6 +96,8 @@
 </template>
 
 <script>
+const Swal = require('sweetalert2');
+
 export default {
   data() {
     return {
@@ -106,19 +108,37 @@ export default {
       tags: [],
       editData: {
         tagName: ''
-      }
+      },
+      index:0,
     }
   },
   methods: {
     newTag() {
       $('#addTag').modal('show');
     },
-    editTag(tag) {
+    editTag(tag,index) {
       $('#editTag').modal('show');
-      this.editData = tag
+      let obj ={
+        id: tag.id,
+        tagName:tag.tagName
+      }
+      this.editData = obj;
+      this.index = index
     },
-    deleteTag() {
-
+    deleteTag(tag,i) {
+      const res = this.callApi('','');
+      Swal.fire({
+                title:  'Are you sure?',
+                text: "You want to delete this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(
+            
+            
+            )
     },
 
     async addTag() {
@@ -144,9 +164,9 @@ export default {
 
       const res = await this.callApi('post', 'app/edit_tag', this.editData);
       if (res.status === 200) {
-        console.log(res.data);
+        // console.log(res.data);
+        this.tags[this.index].tagName = this.editData.tagName
         this.s('Tag have been edited successfully');
-        this.editData.tagName = '';
         $('#editTag').modal('hide');
       } else {
         this.swr();

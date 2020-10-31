@@ -2042,6 +2042,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+var Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2051,18 +2053,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       tags: [],
       editData: {
         tagName: ''
-      }
+      },
+      index: 0
     };
   },
   methods: {
     newTag: function newTag() {
       $('#addTag').modal('show');
     },
-    editTag: function editTag(tag) {
+    editTag: function editTag(tag, index) {
       $('#editTag').modal('show');
-      this.editData = tag;
+      var obj = {
+        id: tag.id,
+        tagName: tag.tagName
+      };
+      this.editData = obj;
+      this.index = index;
     },
-    deleteTag: function deleteTag() {},
+    deleteTag: function deleteTag(tag, i) {
+      var res = this.callApi('', '');
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then();
+    },
     addTag: function addTag() {
       var _this = this;
 
@@ -2130,11 +2149,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 res = _context2.sent;
 
                 if (res.status === 200) {
-                  console.log(res.data);
+                  // console.log(res.data);
+                  _this2.tags[_this2.index].tagName = _this2.editData.tagName;
 
                   _this2.s('Tag have been edited successfully');
 
-                  _this2.editData.tagName = '';
                   $('#editTag').modal('hide');
                 } else {
                   _this2.swr();
@@ -42198,7 +42217,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.editTag(tag)
+                            return _vm.editTag(tag, i)
                           }
                         }
                       },
@@ -42215,7 +42234,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.deleteTag($event)
+                            return _vm.deleteTag(tag, i)
                           }
                         }
                       },
@@ -58460,7 +58479,8 @@ var Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/di
       });
     },
     swr: function swr() {
-      var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Some thing went wrong! Please try again';
+      var desc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Some thing went wrong! Please try again';
+      var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "!Oop";
       Swal.fire({
         toast: true,
         icon: "warning",
@@ -58472,7 +58492,8 @@ var Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/di
           toast.addEventListener("mouseenter", Swal.stopTimer);
           toast.addEventListener("mouseleave", Swal.resumeTimer);
         },
-        title: title
+        title: title,
+        text: desc
       });
     }
   }
