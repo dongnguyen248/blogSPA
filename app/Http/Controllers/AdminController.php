@@ -60,13 +60,16 @@ class AdminController extends Controller
     public function editCategory(Request $request)
     {
         # code...
-        $id = $request->id;
-        dd($request);
+        $id = $request['id'];
         $photoName = time().'.'.$request->file('image')->extension();
         $request->file('image')->move(public_path('uploads'),$photoName);
+        
         $category = Category::findOrFail($id);
-        $category->categoryName = $request->categoryName;
-        $category->iconImage = $request->iconImage;
+        @unlink(public_path('uploads').$category->iconImage);
+        $category->categoryName =$request['categoryName'];
+        $category->iconImage =$photoName;
+        
+      
         $category->save();
         return response()->json($category);
     }

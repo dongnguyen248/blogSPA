@@ -117,7 +117,7 @@
         <div class="modal-body">
           <input type="text" class="form-control" placeholder="Add category name" v-model="editData.categoryName">
         </div>
-         <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+        <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
           <input id="upload" type="file" @change="chooseFile" accept="image/*" class="form-control border-0">
           <label id="upload-label" for="upload" class="font-weight-light text-muted">{{editData.iconImage}}</label>
           <div class="input-group-append">
@@ -153,13 +153,14 @@ export default {
       editData: {
         categoryName: '',
         image: null,
+        iconImage: ''
 
-        
+
       },
       index: 0,
       delcategory: {
         categoryName: '',
-        iconImage:''
+        iconImage: ''
       },
       form: new FormData()
 
@@ -183,6 +184,7 @@ export default {
         this.categories.push(res.data);
         this.s('Tag haved been added successfully');
         this.data.categoryName = '';
+        this.data.photo = '';
         $('#addcategory').modal('hide');
       } else {
         this.swr();
@@ -198,8 +200,8 @@ export default {
       let obj = {
         id: category.id,
         categoryName: category.categoryName,
-        
-        
+        iconImage :category.iconImage
+
       }
       this.editData = obj;
       this.index = index
@@ -222,22 +224,26 @@ export default {
         this.swr();
       }
     },
+    async saveCategory() {
+      if (this.editData.categoryName == '') return this.i('categoryName is required !');
+      this.form.append('categoryName', this.editData.categoryName)
+      this.form.append('id',this.editData.id);
 
-  },
-  async saveCategory() {
-    if (this.editData.categoryName == '') return this.i('categoryName is required !');
-    this.form.append('categoryName',this.editData.categoryName)
-    this.form.append('image',this.data.image)
-    console.log(this.form);
-    const res = await this.callApi('post', 'app/edit_category', this.form);
-    if (res.status === 200) {
-      // console.log(res.data);
-      this.categories[this.index].categoryName = this.editData.categoryName
-      this.s('Tag have been edited successfully');
-      $('#editcategory').modal('hide');
-    } else {
-      this.swr();
-    }
+      this.form.append('image', this.data.image)
+      console.log(this.form);
+      const res = await this.callApi('post', 'app/edit_category', this.form);
+      if (res.status === 200) {
+        console.log(this.index);
+        this.categories[this.index].categoryName = res.data.categoryName
+        this.categories[this.index].iconImage = res.data.iconImage
+        this.s('Tag have been edited successfully');
+
+        $('#editcategory').modal('hide');
+      } else {
+        this.swr();
+      }
+
+    },
 
   },
 
@@ -255,10 +261,11 @@ export default {
 </script>
 
 <style scoped>
-img{
+img {
   height: 100px;
   width: 100px;
 }
+
 #modaldel {
   /* background-color:; */
   border-color: #dc3545;

@@ -2097,7 +2097,8 @@ var Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/di
       categories: [],
       editData: {
         categoryName: '',
-        image: null
+        image: null,
+        iconImage: ''
       },
       index: 0,
       delcategory: {
@@ -2147,6 +2148,7 @@ var Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/di
                   _this.s('Tag haved been added successfully');
 
                   _this.data.categoryName = '';
+                  _this.data.photo = '';
                   $('#addcategory').modal('hide');
                 } else {
                   _this.swr();
@@ -2168,7 +2170,8 @@ var Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/di
 
       var obj = {
         id: category.id,
-        categoryName: category.categoryName
+        categoryName: category.categoryName,
+        iconImage: category.iconImage
       };
       this.editData = obj;
       this.index = index;
@@ -2211,54 +2214,57 @@ var Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/di
           }
         }, _callee2);
       }))();
-    }
-  },
-  saveCategory: function saveCategory() {
-    var _this3 = this;
+    },
+    saveCategory: function saveCategory() {
+      var _this3 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              if (!(_this3.editData.categoryName == '')) {
-                _context3.next = 2;
-                break;
-              }
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!(_this3.editData.categoryName == '')) {
+                  _context3.next = 2;
+                  break;
+                }
 
-              return _context3.abrupt("return", _this3.i('categoryName is required !'));
+                return _context3.abrupt("return", _this3.i('categoryName is required !'));
 
-            case 2:
-              _this3.form.append('categoryName', _this3.editData.categoryName);
+              case 2:
+                _this3.form.append('categoryName', _this3.editData.categoryName);
 
-              _this3.form.append('image', _this3.data.image);
+                _this3.form.append('id', _this3.editData.id);
 
-              console.log(_this3.form);
-              _context3.next = 7;
-              return _this3.callApi('post', 'app/edit_category', _this3.form);
+                _this3.form.append('image', _this3.data.image);
 
-            case 7:
-              res = _context3.sent;
+                console.log(_this3.form);
+                _context3.next = 8;
+                return _this3.callApi('post', 'app/edit_category', _this3.form);
 
-              if (res.status === 200) {
-                // console.log(res.data);
-                _this3.categories[_this3.index].categoryName = _this3.editData.categoryName;
+              case 8:
+                res = _context3.sent;
 
-                _this3.s('Tag have been edited successfully');
+                if (res.status === 200) {
+                  console.log(_this3.index);
+                  _this3.categories[_this3.index].categoryName = res.data.categoryName;
+                  _this3.categories[_this3.index].iconImage = res.data.iconImage;
 
-                $('#editcategory').modal('hide');
-              } else {
-                _this3.swr();
-              }
+                  _this3.s('Tag have been edited successfully');
 
-            case 9:
-            case "end":
-              return _context3.stop();
+                  $('#editcategory').modal('hide');
+                } else {
+                  _this3.swr();
+                }
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
           }
-        }
-      }, _callee3);
-    }))();
+        }, _callee3);
+      }))();
+    }
   },
   created: function created() {
     var _this4 = this;
@@ -2290,6 +2296,54 @@ var Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/di
     }))();
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/ListBlog.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Admin/ListBlog.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -7117,7 +7171,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\nimg[data-v-04ea1409]{\n  height: 100px;\n  width: 100px;\n}\n#modaldel[data-v-04ea1409] {\n  /* background-color:; */\n  border-color: #dc3545;\n  color: #dc3545;\n}\n#upload[data-v-04ea1409] {\n  opacity: 0;\n}\n#upload-label[data-v-04ea1409] {\n  position: absolute;\n  top: 50%;\n  left: 1rem;\n  transform: translateY(-50%);\n}\n.image-area[data-v-04ea1409] {\n  border: 2px dashed rgba(255, 255, 255, 0.7);\n  padding: 1rem;\n  position: relative;\n}\n.image-area[data-v-04ea1409]::before {\n  content: 'Uploaded image result';\n  color: #fff;\n  font-weight: bold;\n  text-transform: uppercase;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  font-size: 0.8rem;\n  z-index: 1;\n}\n.image-area img[data-v-04ea1409] {\n  z-index: 2;\n  position: relative;\n}\n", ""]);
+exports.push([module.i, "\nimg[data-v-04ea1409] {\n  height: 100px;\n  width: 100px;\n}\n#modaldel[data-v-04ea1409] {\n  /* background-color:; */\n  border-color: #dc3545;\n  color: #dc3545;\n}\n#upload[data-v-04ea1409] {\n  opacity: 0;\n}\n#upload-label[data-v-04ea1409] {\n  position: absolute;\n  top: 50%;\n  left: 1rem;\n  transform: translateY(-50%);\n}\n.image-area[data-v-04ea1409] {\n  border: 2px dashed rgba(255, 255, 255, 0.7);\n  padding: 1rem;\n  position: relative;\n}\n.image-area[data-v-04ea1409]::before {\n  content: 'Uploaded image result';\n  color: #fff;\n  font-weight: bold;\n  text-transform: uppercase;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  font-size: 0.8rem;\n  z-index: 1;\n}\n.image-area img[data-v-04ea1409] {\n  z-index: 2;\n  position: relative;\n}\n", ""]);
 
 // exports
 
@@ -43707,7 +43761,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "container-fluid" }, [
           _c("div", { staticClass: "row" }, [
             _c("section", { staticClass: "col-lg-5 connectedSortable" }, [
-              _vm._v("\n\n\n          this is list blog\n\n    \n        ")
+              _vm._v("\n\n          this is list blog\n\n        ")
             ])
           ])
         ])
@@ -60374,15 +60428,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ListBlog_vue_vue_type_template_id_04ad2b6b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListBlog.vue?vue&type=template&id=04ad2b6b& */ "./resources/js/components/Admin/ListBlog.vue?vue&type=template&id=04ad2b6b&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ListBlog_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListBlog.vue?vue&type=script&lang=js& */ "./resources/js/components/Admin/ListBlog.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ListBlog_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ListBlog_vue_vue_type_template_id_04ad2b6b___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ListBlog_vue_vue_type_template_id_04ad2b6b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -60396,6 +60452,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/Admin/ListBlog.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/ListBlog.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/Admin/ListBlog.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListBlog_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ListBlog.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/ListBlog.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListBlog_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
