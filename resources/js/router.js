@@ -5,6 +5,7 @@ import ListBlog from './components/Admin/ListBlog.vue';
 import Profile from './components/Admin/Profile.vue';
 import CreateBlog from './components/Admin/CreateBlog.vue';
 import Tags from './components/Admin/Tags.vue';
+import Category from './components/Admin/Category.vue';
 Vue.use(Router);
 
 const routes = [{
@@ -30,6 +31,10 @@ const routes = [{
     {
         path: "/admin/tags",
         component: Tags
+    },
+    {
+        path: "/admin/categories",
+        component: Category
     }
 ];
 

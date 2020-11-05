@@ -59,8 +59,8 @@
   <div class="modal fade" id='addTag' tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Add Tag</h4>
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100">Add Tag</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
@@ -75,11 +75,28 @@
   </div>
   <!-- Model edit tag -->
 
+  <div class="modal fade" id='deleteTag' tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center" id="modaldel">
+          <h4 class="modal-title  w-100" ><i class="fas fa-exclamation"></i> Delete Tag</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <p>Are You sure delete it?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" @click.prevent="delTag">Delete </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal fade" id='editTag' tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Edit Tag</h4>
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100">Edit Tag</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
@@ -87,7 +104,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" @click.prevent="saveTag">Save Tag</button>
+          <button type="button" class="btn btn-primary" @click.prevent="saveTag">Save </button>
         </div>
       </div>
     </div>
@@ -109,38 +126,42 @@ export default {
       editData: {
         tagName: ''
       },
-      index:0,
+      index: 0,
+      detag: {
+        tagName: ''
+      }
     }
   },
   methods: {
     newTag() {
       $('#addTag').modal('show');
     },
-    editTag(tag,index) {
+    editTag(tag, index) {
       $('#editTag').modal('show');
-      let obj ={
+      let obj = {
         id: tag.id,
-        tagName:tag.tagName
+        tagName: tag.tagName
       }
       this.editData = obj;
       this.index = index
     },
-    deleteTag(tag,i) {
-      const res = this.callApi('','');
-      Swal.fire({
-                title:  'Are you sure?',
-                text: "You want to delete this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(
-            
-            
-            )
-    },
+    deleteTag(tag, index) {
+      $('#deleteTag').modal('show');
+      this.detag = tag;
+      this.index = index;
 
+    },
+    async delTag() {
+      const res = await this.callApi('post', 'app/del_tag', this.detag);
+      if (res.status === 200) {
+        this.tags.splice(this.index, 1);
+        this.s('This tag has delete successfull');
+        $('#deleteTag').modal('hide');
+
+      } else {
+        this.swr();
+      }
+    },
     async addTag() {
 
       if (this.data.tagName == '') return this.i('tagName is required !');
@@ -189,3 +210,12 @@ export default {
 
 }
 </script>
+
+<style scoped>
+#modaldel {
+  /* background-color:; */
+  border-color: #dc3545;
+  color: #dc3545;
+ 
+}
+</style>

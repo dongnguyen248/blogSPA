@@ -56,6 +56,15 @@
           </li>
   
           <li class="nav-item has-treeview">
+            <router-link to="/admin/categories" class="nav-link ml-2">
+            <i class="fas fa-th-list"></i>
+              <p class="pl-2">
+                Category
+              </p>
+            </router-link>
+         
+          </li>
+          <li class="nav-item has-treeview">
             <router-link to="/admin/tags" class="nav-link ml-2">
              <i class="fas fa-tag"></i>
               <p class="pl-2">

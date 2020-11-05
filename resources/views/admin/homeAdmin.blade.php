@@ -19,8 +19,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script>
+      (function(){
+        window.Laravel = {
+          csrfToken:"{{ csrf_token() }}"
+        };
+      })();
+    </script>
 </head>
 <body>
+
     <div id="app">
       
       <main-app></main-app>
